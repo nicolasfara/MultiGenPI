@@ -27,72 +27,23 @@ namespace MultiGenPI
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        AD_DAC ADDAC = new AD_DAC();
+
         public MainPage()
         {
-            this.InitializeComponent();
-            InitAll();        
+            this.InitializeComponent();     
         }
-
-        private async Task InitSpi()
-        {
-            try
-            {
-                var settingsDDS = new SpiConnectionSettings(0);
-                var settingsDAC = new SpiConnectionSettings(1);
-                settingsDDS.ClockFrequency = 1000000;
-                settingsDAC.ClockFrequency = 1000000;
-                settingsDDS.Mode = SpiMode.Mode0;
-                settingsDAC.Mode = SpiMode.Mode0;
-
-                string spiDDS = SpiDevice.GetDeviceSelector("SPI0");
-                string spiDAC = SpiDevice.GetDeviceSelector("SPI0");
-                var deviceInfoDDS = await DeviceInformation.FindAllAsync(spiDDS);
-                var deviceInfoDAC = await DeviceInformation.FindAllAsync(spiDAC);
-                DDS = await SpiDevice.FromIdAsync(deviceInfoDDS[0].Id, settingsDDS);
-                DAC = await SpiDevice.FromIdAsync(deviceInfoDAC[0].Id, settingsDAC);
-            }
-            catch(Exception ex)
-            {
-                throw new Exception("Spi initialization fail", ex);
-            }
-
-        }
-
-        private void InitGpio()
-        {
-            var gpio = GpioController.GetDefault();
-            IO_Sync = gpio.OpenPin(22);
-            IO_Sync.Write(GpioPinValue.Low);
-            IO_Sync.SetDriveMode(GpioPinDriveMode.Output);
-        }
-
-        private async void InitAll()
-        {
-            try
-            {
-                InitGpio();
-                await InitSpi();
-            }
-            catch(Exception ex)
-            {
-                throw new Exception("Init fail", ex);
-            }
-        }
-
-        private SpiDevice DDS;
-        private SpiDevice DAC;
-        private GpioPin IO_Sync;
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            byte[] dds = new byte[3]{ 0xFF, 0x0F, 0xF0 };
-            DDS.Write(dds);
+            //byte[] dds = new byte[3]{ 0xFF, 0x0F, 0xF0 };
+            ADDAC.writeDDS(0x0FF0);
         }
 
         private void button_Copy_Click(object sender, RoutedEventArgs e)
         {
-            byte[] dac = new byte[3] { 0xFF, 0x0F, 0xF0 };
-            DAC.Write(dac);
+            //byte[] dac = new byte[3] { 0xFF, 0x0F, 0xF0 };
+            ADDAC.writeDAC(0x0F0F);
         }
     }
 
