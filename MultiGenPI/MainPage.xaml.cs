@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -29,21 +30,30 @@ namespace MultiGenPI
     {
         AD_DAC ADDAC = new AD_DAC();
 
+        string Freq_Hz = "Hz";
+        string Freq_KHz = "kHz";
+        string Freq_MHz = "MHz";
+        string Amp_Vpp = "Vpp";
+        string Amp_mVpp = "mVpp";
+        string Fase_Gradi = "°";
+
         public MainPage()
         {
-            this.InitializeComponent();     
+            this.InitializeComponent();
+            frequency_comboBox.Items.Insert(0, Freq_Hz);
+            frequency_comboBox.Items.Insert(1, Freq_KHz);
+            frequency_comboBox.Items.Insert(2, Freq_MHz);
+            amplitude_comboBox.Items.Insert(0, Amp_Vpp);
+            amplitude_comboBox.Items.Insert(1, Amp_mVpp);
+            phase_comboBox.Items.Insert(0, Fase_Gradi);
+            frequency_comboBox.SelectedIndex = 0;
+            amplitude_comboBox.SelectedIndex = 1;
+            phase_comboBox.SelectedIndex = 0;
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void frequency_comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //byte[] dds = new byte[3]{ 0xFF, 0x0F, 0xF0 };
-            ADDAC.writeDDS(0x0FF0);
-        }
-
-        private void button_Copy_Click(object sender, RoutedEventArgs e)
-        {
-            //byte[] dac = new byte[3] { 0xFF, 0x0F, 0xF0 };
-            ADDAC.writeDAC(0x0F0F);
+            Debug.WriteLine("Cabio ComboBox");
         }
     }
 

@@ -112,6 +112,8 @@ namespace MultiGenPI
             writeDAC(word);
         } //FINE setAmplitude()
 
+        ////////////////////////////////////////////////////////////
+        // ESECUZIONE DEL CICLO IO/UPDATE
         public void AD9954_IoUpdate()
         {
             IO_Update.Write(GpioPinValue.High);
@@ -120,6 +122,8 @@ namespace MultiGenPI
             Task.Delay(1);
         }   //FINE AD9954_IoUpdate()
 
+        ////////////////////////////////////////////////////////////
+        // RESET COMPLETO DEL CHIP
         public void AD9954_reset()
         {
             Reset.Write(GpioPinValue.High);
@@ -128,6 +132,8 @@ namespace MultiGenPI
             Task.Delay(10);
         }   //FINE AD9954_Reset()
 
+        ////////////////////////////////////////////////////////////
+        // SCRITTURA REGISTRO
         private void AD9954_WriteReg(byte RegNum, byte RegSize, ulong Data)
         {
             if (RegSize < 1 || RegSize > 4)
@@ -151,6 +157,8 @@ namespace MultiGenPI
                 DDS.Write(word_8);
         }   //FINE AD9954_WriteReg()
 
+        ////////////////////////////////////////////////////////////
+        // LETTURA REGISTRO
         private ulong AD9954_ReadReg(byte RegNum, byte RegSize) 
         {
             ulong Val;
@@ -170,6 +178,11 @@ namespace MultiGenPI
             return Val;
         }
 
+        ////////////////////////////////////////////////////////////
+        // IMPOSTAZIONE FREQUENZA
+        // LA FREQUENZA E' ESPRESSA IN Hz
+        // RITORNA TRUE SE OK, FALSE SE OUT OF RANGE
+        // UNA FREQUENZA DI 0 Hz SPEGNE IL GENERATORE
         public bool AD9954_SetFreq(double Freq)
         {
             // DETERMINA ORA IL VALORE DELL' FTW
@@ -225,24 +238,32 @@ namespace MultiGenPI
             AD9954_IoUpdate();
         }   //FINE AD9954_WriteRSCW()
 
+        ////////////////////////////////////////////////////////////
+        // INIZIO SCRITTURA BYTES NELLA RAM
         public void AD9954_StartRamWrite()
         {
             byte[] _StartWriteRAM = { 0x0B };
             DDS.Write(_StartWriteRAM);
         }   //FINE AD9954_StartRamWrite()
 
+        ////////////////////////////////////////////////////////////
+        // INIZIO LETTURA BYTES DALLA RAM
         public void AD9954_StartRamRead()
         {
             byte[] _StartRamRead = { 0x8B };
             DDS.Write(_StartRamRead);
         }   //FINE AD9954_StartRamRead()
 
+        ////////////////////////////////////////////////////////////
+        // SCRITTURA DI UN BYTE NELLA RAM
         public void AD9954_WriteRamByte(byte b)
         {
             byte[] _b = { b };
             DDS.Write(_b);
         }   //FINE AD9954_WriteRamByte()
 
+        ////////////////////////////////////////////////////////////
+        // LETTURA DI UN BYTE DALLA RAM
         public byte[] AD9954_ReadRam()
         {
             byte[] b = { };
@@ -252,18 +273,24 @@ namespace MultiGenPI
             return b;
         }   //FINE AD9954_ReadRam()
 
+        ////////////////////////////////////////////////////////////
+        // SCRITTURA DI UNA WORD NELLA RAM
         public void AD9954_WriteRamWord (UInt16 Word)
         {
             byte[] _Word = { (byte)(Word >> 8), (byte)(Word) };
             DDS.Write(_Word);
         }   //FINE AD9954_WriteRamWord()
 
+        ////////////////////////////////////////////////////////////
+        // SCRITTURA DI UN LONG NELLA RAM
         public void AD9954_WriteRamLong(ulong l)
         {
             byte[] _l = { (byte)(l >> 24), (byte)(l >> 16), (byte)(l >> 8), (byte)(l) };
             DDS.Write(_l);
         }
 
+        ////////////////////////////////////////////////////////////
+        // IMPOSTAZIONE DELLA MODALITA' DI SWEEP
         public bool AD9954_SetSweep(byte SweepMode, double F1, double F2, double Time)
         {
             double RampRate;
@@ -324,11 +351,15 @@ namespace MultiGenPI
             return true;
         }
 
+        ////////////////////////////////////////////////////////////
+        // ESECUZIONE DI UN CICLO DI SWEEP
         public void AD9954_SweepCycle()
         {
             AD9954_IoUpdate();
         }
 
+        ////////////////////////////////////////////////////////////
+        // ARRESTO DELLA MODALITA' DI SWEEP
         public void AD9954_SweepStop()
         {
             ulong cfr1;

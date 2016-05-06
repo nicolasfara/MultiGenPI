@@ -8,8 +8,12 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="button" Content="DDS" HorizontalAlignment="Left" Margin="309,291,0,0" VerticalAlignment="Top" Click="button_Click"/>
-        <Button x:Name="button_Copy" Content="DAC" HorizontalAlignment="Left" Margin="680,291,0,0" VerticalAlignment="Top" Click="button_Copy_Click"/>
-
+        <TextBox x:Name="frequency_textBox" HorizontalAlignment="Left" Margin="90,150,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="70" Width="305" FontSize="48" TextAlignment="Left" PlaceholderText="Frequenza"/>
+        <TextBox x:Name="phase_textBox" HorizontalAlignment="Left" Margin="90,350,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="70" Width="305" FontSize="48" TextAlignment="Left" PlaceholderText="Fase"/>
+        <ToggleSwitch x:Name="OndaQuadra_Togle" Header="Onda quadra" HorizontalAlignment="Left" Margin="95,498,0,0" VerticalAlignment="Top" Height="135" Width="550" FontSize="48" OffContent="Disattivata" OnContent="Attivata"/>
+        <TextBox x:Name="amplitude_textBox" HorizontalAlignment="Left" Margin="90,250,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="70" Width="305" FontSize="48" TextAlignment="Left" PlaceholderText="Ampiezza"/>
+        <ComboBox x:Name="frequency_comboBox" HorizontalAlignment="Left" Margin="405,150,0,0" VerticalAlignment="Top" Width="140" Height="70" FontSize="20" SelectionChanged="frequency_comboBox_SelectionChanged"/>
+        <ComboBox x:Name="amplitude_comboBox" HorizontalAlignment="Left" Margin="405,250,0,0" VerticalAlignment="Top" Width="140" Height="70" FontSize="20"/>
+        <ComboBox x:Name="phase_comboBox" HorizontalAlignment="Left" Margin="405,350,0,0" VerticalAlignment="Top" Width="140" Height="70" MaxDropDownHeight="3" FontSize="20"/>
     </Grid>
 </Page>
